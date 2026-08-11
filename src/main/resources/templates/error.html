@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Възникна грешка - Car Rental</title>
+</head>
+<body style="text-align: center; margin-top: 50px;">
+<h1 style="color: red;">Опа! Нещо се обърка.</h1>
+
+<!-- Тук показваме съобщението, което хендлърът ни е изпратил -->
+<h3 th:text="${message}">Съобщение за грешка</h3>
+
+<br><br>
+<a th:href="@{/}" style="padding: 10px; background-color: blue; color: white; text-decoration: none;">
+    Върни ме в началото
+</a>
+</body>
+</html>
