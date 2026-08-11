@@ -3,32 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация - Car Rental</title>
+    <style>
+        :root {
+            --primary-color: #1e293b;
+            --accent-color: #0284c7;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #0369a1;
+        }
+
+        .error-msg {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .redirect-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .redirect-text a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .redirect-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h2>Създай нов профил</h2>
 
-<form th:action="@{/users/register}" th:object="${userRegisterDTO}" method="POST">
+<!-- Навигация -->
+<nav>
+    <div><strong>🚗 Car Rental System</strong></div>
     <div>
-        <label for="username">Потребителско име:</label>
-        <input type="text" id="username" th:field="*{username}" />
-        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></small>
+        <a th:href="@{/}" style="color: #cbd5e1;">Начало</a>
+        <a th:href="@{/users/login}">Вход</a>
     </div>
-    <br>
-    <div>
-        <label for="email">Имейл:</label>
-        <input type="email" id="email" th:field="*{email}" />
-        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></small>
-    </div>
-    <br>
-    <div>
-        <label for="password">Парола:</label>
-        <input type="password" id="password" th:field="*{password}" />
-        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></small>
-    </div>
-    <br>
-    <button type="submit">Регистрирай се</button>
-</form>
+</nav>
 
-<p>Вече имаш профил? <a th:href="@{/users/login}">Влез тук</a></p>
+<div class="container">
+    <h2>Създай нов профил</h2>
+
+    <form th:action="@{/users/register}" th:object="${userRegisterDTO}" method="POST">
+        <div class="form-group">
+            <label for="username">Потребителско име:</label>
+            <input type="text" id="username" th:field="*{username}" placeholder="Въведи потребителско име" />
+            <small class="error-msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Имейл:</label>
+            <input type="email" id="email" th:field="*{email}" placeholder="name@example.com" />
+            <small class="error-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Парола:</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Въведи сигурна парола" />
+            <small class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+        </div>
+
+        <button type="submit" class="btn">Регистрирай се</button>
+    </form>
+
+    <div class="redirect-text">
+        Вече имаш профил? <a th:href="@{/users/login}">Влез тук</a>
+    </div>
+</div>
+
 </body>
 </html>

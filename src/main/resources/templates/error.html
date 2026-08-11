@@ -3,16 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <title>Възникна грешка - Car Rental</title>
+    <style>
+        :root {
+            --primary-color: #1e293b;
+            --accent-color: #0284c7;
+            --danger-color: #dc2626;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--danger-color);
+            margin-top: 0;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .error-box {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #fecaca;
+            font-size: 15px;
+            margin-bottom: 30px;
+            word-break: break-word;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background-color: #0369a1;
+        }
+    </style>
 </head>
-<body style="text-align: center; margin-top: 50px;">
-<h1 style="color: red;">Опа! Нещо се обърка.</h1>
+<body>
 
-<!-- Тук показваме съобщението, което хендлърът ни е изпратил -->
-<h3 th:text="${message}">Съобщение за грешка</h3>
+<nav>
+    <div><strong>🚗 Car Rental System</strong></div>
+    <div>
+        <a th:href="@{/}" style="color: #cbd5e1;">Начало</a>
+    </div>
+</nav>
 
-<br><br>
-<a th:href="@{/}" style="padding: 10px; background-color: blue; color: white; text-decoration: none;">
-    Върни ме в началото
-</a>
+<div class="container">
+    <h1>Опа! Нещо се обърка.</h1>
+
+    <div class="error-box">
+        <span th:text="${message}">Възникна неочаквана системна грешка! Моля, опитайте по-късно.</span>
+    </div>
+
+    <a th:href="@{/}" class="btn">
+        Върни ме в началото
+    </a>
+</div>
+
 </body>
 </html>

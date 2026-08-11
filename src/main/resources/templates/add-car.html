@@ -3,39 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <title>Добави Автомобил - Car Rental</title>
+    <style>
+        :root {
+            --primary-color: #1e293b;
+            --accent-color: #0284c7;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #15803d;
+        }
+
+        .error-msg {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h2>Добавяне на нов автомобил</h2>
 
-<form th:action="@{/cars/add}" th:object="${vehicleAddDTO}" method="POST">
+<!-- Навигация -->
+<nav>
+    <div><strong>🚗 Car Rental System</strong></div>
     <div>
-        <label for="make">Марка:</label>
-        <input type="text" id="make" th:field="*{make}" />
-        <small th:if="${#fields.hasErrors('make')}" th:errors="*{make}" style="color: red;"></small>
+        <a th:href="@{/cars/all}">Автопак</a>
+        <a th:href="@{/}">Начало</a>
     </div>
-    <br>
-    <div>
-        <label for="model">Модел:</label>
-        <input type="text" id="model" th:field="*{model}" />
-        <small th:if="${#fields.hasErrors('model')}" th:errors="*{model}" style="color: red;"></small>
-    </div>
-    <br>
-    <div>
-        <label for="registrationNumber">Рег. Номер:</label>
-        <input type="text" id="registrationNumber" th:field="*{registrationNumber}" />
-        <small th:if="${#fields.hasErrors('registrationNumber')}" th:errors="*{registrationNumber}" style="color: red;"></small>
-    </div>
-    <br>
-    <div>
-        <label for="pricePerDay">Цена на ден (лв):</label>
-        <input type="number" step="0.01" id="pricePerDay" th:field="*{pricePerDay}" />
-        <small th:if="${#fields.hasErrors('pricePerDay')}" th:errors="*{pricePerDay}" style="color: red;"></small>
-    </div>
-    <br>
-    <button type="submit" style="background-color: green; color: white; padding: 10px;">Запази автомобила</button>
-</form>
+</nav>
 
-<br>
-<a th:href="@{/cars/all}">Отказ (назад към каталога)</a>
+<!-- Основен панел на формата -->
+<div class="container">
+    <h2>Добавяне на нов автомобил</h2>
+
+    <form th:action="@{/cars/add}" th:object="${vehicleAddDTO}" method="POST">
+        <div class="form-group">
+            <label for="make">Марка:</label>
+            <input type="text" id="make" th:field="*{make}" placeholder="например Skoda" />
+            <small class="error-msg" th:if="${#fields.hasErrors('make')}" th:errors="*{make}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Модел:</label>
+            <input type="text" id="model" th:field="*{model}" placeholder="например Kodiaq" />
+            <small class="error-msg" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="registrationNumber">Рег. Номер:</label>
+            <input type="text" id="registrationNumber" th:field="*{registrationNumber}" placeholder="например CB1234AB" />
+            <small class="error-msg" th:if="${#fields.hasErrors('registrationNumber')}" th:errors="*{registrationNumber}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="pricePerDay">Цена на ден (лв):</label>
+            <input type="number" step="0.01" id="pricePerDay" th:field="*{pricePerDay}" placeholder="0.00" />
+            <small class="error-msg" th:if="${#fields.hasErrors('pricePerDay')}" th:errors="*{pricePerDay}"></small>
+        </div>
+
+        <button type="submit" class="btn">Запази автомобила</button>
+    </form>
+
+    <div class="back-link">
+        <a th:href="@{/cars/all}">Отказ (назад към каталога)</a>
+    </div>
+</div>
+
 </body>
 </html>

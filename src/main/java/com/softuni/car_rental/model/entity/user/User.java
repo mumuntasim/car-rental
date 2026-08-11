@@ -1,11 +1,14 @@
 package com.softuni.car_rental.model.entity.user;
 
+import com.softuni.car_rental.model.entity.vehicle.Vehicle;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -32,4 +35,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Vehicle> rentedCars = new ArrayList<>();
 }

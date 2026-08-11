@@ -32,4 +32,7 @@ public class Vehicle {
 
     @Column(nullable = false)
     private BigDecimal pricePerDay;
+
+    @Column(nullable = false)
+    private boolean isRented = false; // Ново поле за статус на наема
 }

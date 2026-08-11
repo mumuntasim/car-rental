@@ -1,32 +1,155 @@
 <!DOCTYPE html>
-<!-- Добавяме xmlns:sec, за да можем да ползваме Spring Security тагове -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Начало - Car Rental</title>
+    <style>
+        :root {
+            --primary-color: #1e293b;
+            --accent-color: #0284c7;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+            font-size: 15px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background-color: #0369a1;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
+        .welcome-box {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<h2>Добре дошли в Car Rental!</h2>
 
-<div sec:authorize="isAnonymous()">
-    <p>Моля, влезте в профила си, за да разгледате каталога.</p>
-    <p>
-        <a th:href="@{/users/login}">Вход</a> |
-        <a th:href="@{/users/register}">Регистрация</a>
-    </p>
-</div>
+<!-- Навигация -->
+<nav>
+    <div><strong>🚗 Car Rental System</strong></div>
+    <div>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/users/login}">Вход</a>
+            <a th:href="@{/users/register}">Регистрация</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/cars/all}">Автопарк</a>
+        </div>
+    </div>
+</nav>
 
-<div sec:authorize="isAuthenticated()">
-    <p>Здравей, <strong sec:authentication="name"></strong>! Вие влязохте успешно.</p>
+<!-- Основен панел -->
+<div class="container">
+    <h2>Добре дошли в Car Rental!</h2>
 
-    <p><a th:href="@{/cars/all}">Разгледай всички автомобили</a></p>
+    <!-- Секция за гости (нерегистрирани) -->
+    <div sec:authorize="isAnonymous()">
+        <p>Моля, влезте в профила си или се регистрирайте, за да разгледате каталога с автомобили.</p>
+        <div>
+            <a th:href="@{/users/login}" class="btn">Вход</a>
+            <a th:href="@{/users/register}" class="btn btn-success">Регистрация</a>
+        </div>
+    </div>
 
-    <form th:action="@{/users/logout}" method="POST">
-        <button type="submit" style="color: white; background-color: red; padding: 10px; border: none; cursor: pointer;">
-            Изход от профила
-        </button>
-    </form>
+    <!-- Секция за влезли потребители -->
+    <div sec:authorize="isAuthenticated()">
+        <div class="welcome-box">
+            <p>Здравей, <strong sec:authentication="name" style="color: var(--primary-color);"></strong>! Успешно влезе в системата.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <a th:href="@{/cars/all}" class="btn">Разгледай всички автомобили</a>
+        </div>
+
+        <form th:action="@{/users/logout}" method="POST" style="margin-top: 15px;">
+            <button type="submit" class="btn btn-danger">
+                Изход от профила
+            </button>
+        </form>
+    </div>
 </div>
 
 </body>
