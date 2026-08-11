@@ -7,20 +7,23 @@
 <body>
 <h2>Създай нов профил</h2>
 
-<form th:action="@{/users/register}" method="POST">
+<form th:action="@{/users/register}" th:object="${userRegisterDTO}" method="POST">
     <div>
         <label for="username">Потребителско име:</label>
-        <input type="text" id="username" name="username" required />
+        <input type="text" id="username" th:field="*{username}" />
+        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></small>
     </div>
     <br>
     <div>
         <label for="email">Имейл:</label>
-        <input type="email" id="email" name="email" required />
+        <input type="email" id="email" th:field="*{email}" />
+        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></small>
     </div>
     <br>
     <div>
         <label for="password">Парола:</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" th:field="*{password}" />
+        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></small>
     </div>
     <br>
     <button type="submit">Регистрирай се</button>

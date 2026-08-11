@@ -19,16 +19,26 @@ public class UserController {
 
 
     @GetMapping("/register")
-    public String register() {
+    public String register(org.springframework.ui.Model model) {
+        if (!model.containsAttribute("userRegisterDTO")) {
+            model.addAttribute("userRegisterDTO", new UserRegisterDTO());
+        }
         return "register";
     }
 
 
     @PostMapping("/register")
-    public String doRegister(UserRegisterDTO registerDTO) {
+    public String doRegister(@jakarta.validation.Valid UserRegisterDTO registerDTO,
+                             org.springframework.validation.BindingResult bindingResult,
+                             org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userRegisterDTO", registerDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterDTO", bindingResult);
+            return "redirect:/users/register";
+        }
+
         authService.registerUser(registerDTO);
-
-
         return "redirect:/users/login";
     }
 
