@@ -1,7 +1,6 @@
 package com.softuni.car_rental.service;
-import com.softuni.car_rental.model.dto.user.UserRegisterDTO;
+
 import com.softuni.car_rental.model.entity.user.User;
-import com.softuni.car_rental.model.entity.user.UserRole;
 import com.softuni.car_rental.repository.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,17 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(UserRegisterDTO registerDTO) {
+    public void registerUser(com.softuni.car_rental.model.dto.user.UserRegisterDTO registerDTO) {
         User user = new User();
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
-
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
-        user.setRole(UserRole.USER);
+        if (userRepository.count() == 0) {
+            user.setRole(com.softuni.car_rental.model.entity.user.UserRole.ADMIN);
+        } else {
+            user.setRole(com.softuni.car_rental.model.entity.user.UserRole.USER);
+        }
 
         userRepository.save(user);
     }

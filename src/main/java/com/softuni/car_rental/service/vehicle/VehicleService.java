@@ -1,6 +1,7 @@
 package com.softuni.car_rental.service.vehicle;
 
 import com.softuni.car_rental.client.InspectionClient;
+
 import com.softuni.car_rental.model.entity.vehicle.Vehicle;
 import com.softuni.car_rental.repository.vehicle.VehicleRepository;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,6 @@ public class VehicleService {
         this.inspectionClient = inspectionClient;
     }
 
-    public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
-    }
 
     public boolean canVehicleBeRented(String registrationNumber) {
         Optional<Vehicle> vehicleOpt = vehicleRepository.findByRegistrationNumber(registrationNumber);
@@ -39,5 +37,19 @@ public class VehicleService {
     public void addInspection(String registrationNumber, boolean passed) {
         com.softuni.car_rental.model.dto.inspection.InspectionAddDTO dto = new com.softuni.car_rental.model.dto.inspection.InspectionAddDTO(registrationNumber, passed);
         inspectionClient.addInspection(dto);
+    }
+
+    public java.util.List<com.softuni.car_rental.model.entity.vehicle.Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
+
+    public void addVehicle(com.softuni.car_rental.model.dto.vehicle.VehicleAddDTO addDTO) {
+        com.softuni.car_rental.model.entity.vehicle.Vehicle vehicle = new com.softuni.car_rental.model.entity.vehicle.Vehicle();
+        vehicle.setMake(addDTO.getMake());
+        vehicle.setModel(addDTO.getModel());
+        vehicle.setRegistrationNumber(addDTO.getRegistrationNumber());
+        vehicle.setPricePerDay(addDTO.getPricePerDay());
+
+        vehicleRepository.save(vehicle);
     }
 }

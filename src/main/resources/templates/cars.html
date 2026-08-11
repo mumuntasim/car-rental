@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Автопарк - Car Rental</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h2>Нашите Автомобили</h2>
+
+<div sec:authorize="hasRole('ADMIN')" style="margin-bottom: 15px; margin-top: 10px;">
+    <a th:href="@{/cars/add}" style="background-color: green; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        + Добави нов автомобил
+    </a>
+</div>
+
+<a th:href="@{/}">Обратно в началото</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Марка</th>
+        <th>Модел</th>
+        <th>Рег. Номер</th>
+        <th>Цена на ден</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.make}">Марка</td>
+        <td th:text="${car.model}">Модел</td>
+        <td th:text="${car.registrationNumber}">Рег. номер</td>
+        <td th:text="${car.pricePerDay} + ' лв.'">Цена</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

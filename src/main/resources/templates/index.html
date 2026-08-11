@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Добавяме xmlns:sec, за да можем да ползваме Spring Security тагове -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Начало - Car Rental</title>
 </head>
 <body>
 <h2>Добре дошли в Car Rental!</h2>
-<p>Вие влязохте успешно в системата.</p>
 
-<form th:action="@{/users/logout}" method="POST">
-    <button type="submit" style="color: white; background-color: red; padding: 10px; border: none; cursor: pointer;">
-        Изход от профила
-    </button>
-</form>
+<div sec:authorize="isAnonymous()">
+    <p>Моля, влезте в профила си, за да разгледате каталога.</p>
+    <p>
+        <a th:href="@{/users/login}">Вход</a> |
+        <a th:href="@{/users/register}">Регистрация</a>
+    </p>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <p>Здравей, <strong sec:authentication="name"></strong>! Вие влязохте успешно.</p>
+
+    <p><a th:href="@{/cars/all}">Разгледай всички автомобили</a></p>
+
+    <form th:action="@{/users/logout}" method="POST">
+        <button type="submit" style="color: white; background-color: red; padding: 10px; border: none; cursor: pointer;">
+            Изход от профила
+        </button>
+    </form>
+</div>
+
 </body>
 </html>
