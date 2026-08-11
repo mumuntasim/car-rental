@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация - Car Rental</title>
+</head>
+<body>
+<h2>Създай нов профил</h2>
+
+<form th:action="@{/users/register}" method="POST">
+    <div>
+        <label for="username">Потребителско име:</label>
+        <input type="text" id="username" name="username" required />
+    </div>
+    <br>
+    <div>
+        <label for="email">Имейл:</label>
+        <input type="email" id="email" name="email" required />
+    </div>
+    <br>
+    <div>
+        <label for="password">Парола:</label>
+        <input type="password" id="password" name="password" required />
+    </div>
+    <br>
+    <button type="submit">Регистрирай се</button>
+</form>
+
+<p>Вече имаш профил? <a th:href="@{/users/login}">Влез тук</a></p>
+</body>
+</html>

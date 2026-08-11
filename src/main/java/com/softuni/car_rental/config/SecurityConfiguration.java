@@ -1,6 +1,5 @@
 package com.softuni.car_rental.config;
 
-import org.springframework.boot.security.autoconfigure.web.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +15,7 @@ public class SecurityConfiguration {
         return httpSecurity
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
-                                .requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations())).permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/error").permitAll()
                                 .requestMatchers("/", "/users/login", "/users/register").permitAll()
                                 .anyRequest().authenticated()
                 )

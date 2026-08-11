@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Начало - Car Rental</title>
+</head>
+<body>
+<h2>Добре дошли в Car Rental!</h2>
+<p>Вие влязохте успешно в системата.</p>
+
+<form th:action="@{/users/logout}" method="POST">
+    <button type="submit" style="color: white; background-color: red; padding: 10px; border: none; cursor: pointer;">
+        Изход от профила
+    </button>
+</form>
+</body>
+</html>
